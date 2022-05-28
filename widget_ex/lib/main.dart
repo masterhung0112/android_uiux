@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:widget_ex/SecondScreen.dart';
+import 'package:widget_ex/custom_app_theme.dart';
 import "dart:math";
 
 import 'custom_color_scheme.dart';
@@ -166,17 +167,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const <Widget>[
-                      Text('MY COACHES',
+                    children: <Widget>[
+                      const Text('MY COACHES',
                           style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 12.0)),
-                      Text('VIEW PASS SESSIONS',
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.0))
+                      Row(
+                        children: const <Widget>[
+                          Text('VIEW PASS SESSIONS',
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.0)),
+                          IconForCustomAppTheme()
+                        ],
+                      ),
+
                     ])),
             const SizedBox(height: 10.0),
             GridView.count(
