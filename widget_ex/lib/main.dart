@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:widget_ex/SecondScreen.dart';
+import "dart:math";
+
+import 'custom_color_scheme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +19,37 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: MyHomePage());
+    return MaterialApp(
+      title: 'Example',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.blue,
+        textTheme: const TextTheme(
+          headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        ),
+        cardTheme: CardTheme(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        )
+      ).copyWith(
+        extensions: <ThemeExtension<dynamic>>[
+          CustomColors.light,
+        ]
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        extensions: <ThemeExtension<dynamic>>[
+          CustomColors.dark
+        ]
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MyHomePage(),
+        SecondScreen.routeName: (context) => const SecondScreen(),
+      },
+    );
   }
 }
 
@@ -35,9 +69,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final statuses = ['Available', 'Away'];
+
   @override
   Widget build(BuildContext context) {
+    final customColors = Theme.of(context).extension<CustomColors>()!;
+
     return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+          )
+        ),
         appBar: AppBar(
             // Here we take the value from the MyHomePage object that was created by
             // the App.build method, and use it to set our appbar title.
@@ -72,8 +115,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     ]),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Stack(children: <Widget>[
+                    Column(children: <Widget>[
                       Container(
                           padding:
                               const EdgeInsets.fromLTRB(25.0, 25.0, 5.0, 5.0),
@@ -85,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   fontSize: 14.0))),
                       Container(
                           padding:
-                              const EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 25.0),
+                              const EdgeInsets.fromLTRB(25.0, 0.0, 5.0, 25.0),
                           child: const Text('244',
                               style: TextStyle(
                                   color: Colors.black,
@@ -93,19 +137,28 @@ class _MyHomePageState extends State<MyHomePage> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 40.0))),
                     ]),
-                    const SizedBox(width: 100.0),
+                    // const SizedBox(width: 100.0),
                     Container(
                         height: 50.0,
                         width: 125.0,
                         decoration: BoxDecoration(
-                          color: Colors.greenAccent[100],
+                          color: customColors.success,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        child: const Center(
-                            child: Text('Buy more',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green)))),
+                        margin: const EdgeInsets.only(right: 20),
+                        child: Center(
+                            child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, SecondScreen.routeName,
+                                      arguments: SecondScreenArguments(
+                                          'Extract Argument screen',
+                                          'Hello world'));
+                                },
+                                child: Text('Buy more',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white))))),
                   ],
                 )),
             const SizedBox(height: 40.0),
@@ -132,23 +185,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisSpacing: 2.0,
                 mainAxisSpacing: 4.0,
                 shrinkWrap: true,
-                children: <Widget>[
-                  _buildCard('Tom', 'Available', 1),
-                  _buildCard('Tom', 'Away', 2),
-                  _buildCard('Tom', 'Away', 3),
-                  _buildCard('Tom', 'Available', 4),
-                  _buildCard('Tom', 'Away', 5),
-                  _buildCard('Tom', 'Available', 6),
-                ])
+                children: List.generate(
+                    6,
+                    (index) => _buildCard(
+                        'Tom',
+                        statuses[index % 2],
+                        index + 1)))
           ]),
         ]));
   }
 
   Widget _buildCard(String name, String status, int cardIndex) {
     return Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
         elevation: 7.0,
         margin: cardIndex.isEven
             ? const EdgeInsets.fromLTRB(10.0, 0.0, 25.0, 10.0)
@@ -196,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                   width: 175.0,
                   decoration: BoxDecoration(
-                      color: status == 'Away' ? Colors.grey : Colors.green,
+                      color: status == 'Away' ? Colors.grey : Theme.of(context).primaryColor,
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0))),
