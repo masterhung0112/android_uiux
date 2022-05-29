@@ -67,9 +67,11 @@ class IconForCustomAppTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppTheme(
-        child: ChildWithCustomAppTheme(),
         customAppTheme: CustomAppThemeData.light.copyWith(
-          plusColor: Colors.blue,
-        ));
+          plusColor: Colors.red,
+        ),
+        child: Builder(builder: (BuildContext context) {
+          return Icon(Icons.add, color: CustomAppTheme.of(context).plusColor);
+        }));
   }
 }
