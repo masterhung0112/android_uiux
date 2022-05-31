@@ -96,6 +96,3 @@ flutter:
     - family: Fa brand
       fonts:
         - asset: fonts/fa-brands-400.ttf
-    - family: My Custom Font
-      fonts:
-        - asset: fonts/MyFlutterApp.ttf
