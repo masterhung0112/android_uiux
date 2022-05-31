@@ -87,3 +87,15 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Fa
+      fonts:
+        - asset: fonts/fa-regular-400.ttf
+        - asset: fonts/fa-solid-900.ttf
+          weight: 900
+    - family: Fa brand
+      fonts:
+        - asset: fonts/fa-brands-400.ttf
+    - family: My Custom Font
+      fonts:
+        - asset: fonts/MyFlutterApp.ttf

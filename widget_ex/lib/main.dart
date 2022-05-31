@@ -6,6 +6,7 @@ import 'package:widget_ex/custom_app_theme.dart';
 import "dart:math";
 
 import 'custom_color_scheme.dart';
+import 'my_flutter_app_icons.dart';
 
 void main() {
   runApp(const MyApp());
@@ -93,13 +94,18 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.grey),
           bottom: const TabBar(tabs: [
             Tab(icon: Icon(Icons.directions_car)),
-            Tab(icon: Icon(Icons.directions_transit)),
+            Tab(
+                child: Text('\u{f0c9}',
+                    style: TextStyle(
+                        fontFamily: 'Fa', fontWeight: FontWeight.w900))),
             Tab(icon: Icon(Icons.directions_bike)),
           ])),
       body: TabBarView(
         children: [
           Coaching(),
-          Icon(Icons.directions_transit),
+          // Icon('\u{f142}', style: TextStyle(fontFamily: 'Font Awesome')),
+          Icon(IconData(0xf0c9, fontFamily: 'Fa')),
+          // Icon(IconData(0xeea3, fontFamily: 'My Custom Font')),
           Icon(Icons.directions_bike),
         ],
       ),
