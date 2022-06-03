@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:widget_ex/SecondScreen.dart';
+import 'package:widget_ex/amazon/amazon_home.dart';
 import 'package:widget_ex/coaching.dart';
 import 'package:widget_ex/constants/routes.dart';
-import 'package:widget_ex/custom_app_theme.dart';
-import "dart:math";
-
-import 'custom_color_scheme.dart';
-import 'my_flutter_app_icons.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        routeHome: (context) => CoachingTab(),
+        routeHome: (context) => AmazonHome(),
         routeCoachingTab: (context) => CoachingTab(),
         SecondScreen.routeName: (context) => const SecondScreen(),
       },
